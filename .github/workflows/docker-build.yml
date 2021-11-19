@@ -39,7 +39,7 @@ jobs:
           context: .
           file: ./Dockerfile-web
           push: true
-          tags: ghcr.io/silkkycloud/bitwarden-web:latest
+          tags: ghcr.io/silkkycloud/bitwarden-web:latest,ghcr.io/silkkycloud/bitwarden-web:2.24.1
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move Cache
