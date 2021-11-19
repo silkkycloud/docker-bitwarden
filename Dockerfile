@@ -57,6 +57,8 @@ ENV ROCKET_PORT=80
 ENV ROCKET_WORKERS=10
 ENV SSL_CERT_DIR=/etc/ssl/certs
 ENV WEB_VAULT_ENABLED=false
+ENV ATTACHMENTS_FOLDER=/vw-attachments
+ENV ICON_CACHE_FOLDER=/vw-icon-cache
 
 RUN apk add --no-cache \
     openssl \
@@ -71,6 +73,7 @@ RUN mkdir -p /data \
     && mkdir -p /vw-icon-cache
 
 WORKDIR /vaultwarden
+
 COPY --from=builder /tmp/vaultwarden/Rocket.toml .
 COPY --from=builder /vaultwarden/target/x86_64-unknown-linux-musl/release/vaultwarden .
 
