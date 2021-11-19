@@ -66,7 +66,7 @@ ENV WEB_VAULT_ENABLED=false \
 RUN apk add --no-cache \
     openssl \
     tzdata \
-    tini \
+    dumb-init \
     postgresql-libs \
     ca-certificates
 
@@ -100,7 +100,8 @@ VOLUME /vw-icon-cache
 EXPOSE 80
 EXPOSE 3012
 
-ENTRYPOINT ["/sbin/tini", "--", "./start.sh"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]
+CMD ["./start.sh"]
 
 STOPSIGNAL SIGTERM
 
