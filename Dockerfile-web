@@ -7,14 +7,10 @@ ARG VAULT_VERSION=a6274fa56ec869a5c981c2edfff9db87a3bca4bf
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM node:14-alpine3.14 AS builder
+FROM node:14-buster AS builder
 
 # Update NPM - Matching the bitwarden/web GH Action Workflow.
 RUN npm -g install npm@7
-
-RUN apk add --no-cache \
-    git \
-    bash
 
 # Prepare the folder to enable non-root, otherwise npm will refuse to run the postinstall
 WORKDIR /vault
