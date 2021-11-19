@@ -73,7 +73,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile-web
+          file: ./Dockerfile.web
           push: true
           tags: ghcr.io/silkkycloud/vaultwarden-web:latest,ghcr.io/silkkycloud/vaultwarden-web:2.24.1
           cache-from: type=local,src=/tmp/.buildx-cache
