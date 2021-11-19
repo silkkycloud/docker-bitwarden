@@ -60,6 +60,7 @@ ENV SSL_CERT_DIR=/etc/ssl/certs
 
 ENV WEB_VAULT_ENABLED=false \
     ATTACHMENTS_FOLDER=/vw-attachments \
+    SENDS_FOLDER=/vw-sends \
     ICON_CACHE_FOLDER=/vw-icon-cache
 
 RUN apk add --no-cache \
@@ -72,6 +73,7 @@ RUN apk add --no-cache \
 # Add persistant data directories
 RUN mkdir -p /data \
     && mkdir -p /vw-attachments \
+    && mkdir -p /vw-sends \
     && mkdir -p /vw-icon-cache
 
 WORKDIR /vaultwarden
@@ -91,6 +93,7 @@ USER vaultwarden
 
 VOLUME /data
 VOLUME /vw-attachments
+VOLUME /vw-sends
 VOLUME /vw-icon-cache
 
 EXPOSE 80

@@ -22,4 +22,7 @@ elif [ -d /etc/bitwarden_rs.d ]; then
     done
 fi
 
+echo "Giving Portgresql time to start"
+sleep 2s
+
 exec /vaultwarden/vaultwarden "${@}"
