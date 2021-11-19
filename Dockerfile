@@ -65,7 +65,7 @@ ENV WEB_VAULT_ENABLED=false \
 RUN apk add --no-cache \
     openssl \
     tzdata \
-    dumb-init \
+    tini \
     postgresql-libs \
     ca-certificates
 
@@ -78,6 +78,7 @@ WORKDIR /vaultwarden
 
 COPY --from=builder /tmp/vaultwarden/Rocket.toml .
 COPY --from=builder /vaultwarden/target/x86_64-unknown-linux-musl/release/vaultwarden .
+COPY ./start.sh .
 
 # Add an unprivileged user and set directory permissions
 RUN adduser --disabled-password --gecos "" --no-create-home vaultwarden \
@@ -95,8 +96,7 @@ VOLUME /vw-icon-cache
 EXPOSE 80
 EXPOSE 3012
 
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["./vaultwarden"]
+ENTRYPOINT ["/sbin/tini", "--", "./start.sh"]
 
 STOPSIGNAL SIGTERM
 
