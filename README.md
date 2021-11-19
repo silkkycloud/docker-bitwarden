@@ -1,3 +1,3 @@
 # Bitwarden
 
-Bitwarden Docker Swarm deployment and image.
+Vaultwarden Docker Swarm deployment and images.

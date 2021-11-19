@@ -50,7 +50,7 @@ RUN cargo build --features ${DB} --release --target=x86_64-unknown-linux-musl
 ####################################################################################################
 ## Final image
 ####################################################################################################
-FROM apline:3.14
+FROM alpine:3.14
 
 ENV ROCKET_ENV="production"
 ENV ROCKET_PORT=80
