@@ -52,13 +52,15 @@ RUN cargo build --features ${DB} --release --target=x86_64-unknown-linux-musl
 ####################################################################################################
 FROM alpine:3.14
 
-ENV ROCKET_ENV="production"
-ENV ROCKET_PORT=80
-ENV ROCKET_WORKERS=10
+ENV ROCKET_ENV="production" \
+    ROCKET_PORT=80 \
+    ROCKET_WORKERS=10
+
 ENV SSL_CERT_DIR=/etc/ssl/certs
-ENV WEB_VAULT_ENABLED=false
-ENV ATTACHMENTS_FOLDER=/vw-attachments
-ENV ICON_CACHE_FOLDER=/vw-icon-cache
+
+ENV WEB_VAULT_ENABLED=false \
+    ATTACHMENTS_FOLDER=/vw-attachments \
+    ICON_CACHE_FOLDER=/vw-icon-cache
 
 RUN apk add --no-cache \
     openssl \
