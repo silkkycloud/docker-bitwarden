@@ -14,6 +14,10 @@ ARG VAULT_VERSION
 # Update NPM - Matching the bitwarden/web GH Action Workflow.
 RUN npm -g install npm@7
 
+RUN apk add --no-cache \
+    git \
+    bash
+
 # Prepare the folder to enable non-root, otherwise npm will refuse to run the postinstall
 WORKDIR /vault
 RUN chown -R node:node /vault
