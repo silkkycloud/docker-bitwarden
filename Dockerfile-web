@@ -7,16 +7,12 @@ ARG VAULT_VERSION=a6274fa56ec869a5c981c2edfff9db87a3bca4bf
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM node:14-alpine3.14 AS builder
+FROM node:14-buster AS builder
 
 ARG VAULT_VERSION
 
 # Update NPM - Matching the bitwarden/web GH Action Workflow.
 RUN npm -g install npm@7
-
-RUN apk add --no-cache \
-    git \
-    bash
 
 # Get the vault patches
 RUN git clone https://github.com/dani-garcia/bw_web_builds.git /tmp/bw_web_builds
