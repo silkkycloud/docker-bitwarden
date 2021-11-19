@@ -1,1 +1,3 @@
-docker-bitwarden
+# Bitwarden
+
+Bitwarden Docker Swarm deployment and image.
