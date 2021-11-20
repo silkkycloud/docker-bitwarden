@@ -44,7 +44,7 @@ services:
       - SMTP_PASSWORD=${MAIL_PASSWORD}
       - SMTP_AUTH_MECHANISM="login"
       # Admin
-      - ADMIN_TOKEN=${ADMIN_TOKEN}
+      #- ADMIN_TOKEN=${ADMIN_TOKEN}
       # Websocket notifications
       - WEBSOCKET_ENABLED=true
       # Sends
