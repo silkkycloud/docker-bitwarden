@@ -59,6 +59,7 @@ ENV ROCKET_ENV="production" \
 ENV SSL_CERT_DIR=/etc/ssl/certs
 
 ENV WEB_VAULT_ENABLED=false \
+    DATA_FOLDER=/data \
     ATTACHMENTS_FOLDER=/vw-attachments \
     SENDS_FOLDER=/vw-sends \
     ICON_CACHE_FOLDER=/vw-icon-cache
@@ -92,9 +93,11 @@ RUN adduser --disabled-password --gecos "" --no-create-home vaultwarden \
     && chown -R vaultwarden:vaultwarden /vw-icon-cache \
     && chown -R vaultwarden:vaultwarden /vaultwarden
 
-ENTRYPOINT ["/sbin/tini", "--", "./start.sh"]
+ENTRYPOINT ["/sbin/tini", "--"]
 
 USER vaultwarden
+
+CMD ["./start.sh"]
 
 VOLUME /data
 VOLUME /vw-attachments
