@@ -66,7 +66,7 @@ ENV WEB_VAULT_ENABLED=false \
 RUN apk add --no-cache \
     openssl \
     tzdata \
-    dumb-init \
+    tini \
     postgresql-libs \
     ca-certificates
 
@@ -90,6 +90,8 @@ RUN adduser --disabled-password --gecos "" --no-create-home vaultwarden \
     && chown -R vaultwarden:vaultwarden /vw-icon-cache \
     && chown -R vaultwarden:vaultwarden /vaultwarden
 
+ENTRYPOINT ["/sbin/tini", "--", "/vaultwarden/start.sh"]
+
 USER vaultwarden
 
 VOLUME /data
@@ -99,9 +101,6 @@ VOLUME /vw-icon-cache
 
 EXPOSE 80
 EXPOSE 3012
-
-ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD ["./start.sh"]
 
 STOPSIGNAL SIGTERM
 
