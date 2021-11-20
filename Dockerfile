@@ -82,6 +82,8 @@ COPY --from=builder /tmp/vaultwarden/Rocket.toml .
 COPY --from=builder /vaultwarden/target/x86_64-unknown-linux-musl/release/vaultwarden .
 COPY ./start.sh .
 
+RUN chmod +x ./start.sh
+
 # Add an unprivileged user and set directory permissions
 RUN adduser --disabled-password --gecos "" --no-create-home vaultwarden \
     && chown -R vaultwarden:vaultwarden /data \
@@ -90,7 +92,7 @@ RUN adduser --disabled-password --gecos "" --no-create-home vaultwarden \
     && chown -R vaultwarden:vaultwarden /vw-icon-cache \
     && chown -R vaultwarden:vaultwarden /vaultwarden
 
-ENTRYPOINT ["/sbin/tini", "--", "/vaultwarden/start.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "./start.sh"]
 
 USER vaultwarden
 
