@@ -20,7 +20,11 @@ RUN mkdir -pv "${CARGO_HOME}" \
     && rustup set profile minimal
 
 # Get Vaultwarden project files
-RUN git clone https://github.com/dani-garcia/vaultwarden.git /tmp/vaultwarden
+RUN --mount=type=cache,target=/tmp/git_cache \
+    git clone https://github.com/dani-garcia/vaultwarden.git /tmp/git_cache/vaultwarden; \
+    cd /tmp/git_cache/vaultwarden \
+    && git pull \
+    && cp -r ./ /tmp/vaultwarden
 
 # Creates a dummy project used to grab dependencies
 RUN USER=root cargo new --bin /vaultwarden
