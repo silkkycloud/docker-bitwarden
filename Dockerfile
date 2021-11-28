@@ -20,21 +20,18 @@ RUN mkdir -pv "${CARGO_HOME}" \
     && rustup set profile minimal
 
 # Get Vaultwarden project files
-RUN --mount=type=cache,target=/tmp/git_cache \
-    git clone https://github.com/dani-garcia/vaultwarden.git /tmp/git_cache/vaultwarden; \
-    cd /tmp/git_cache/vaultwarden \
-    && git pull \
-    && cp -r ./ /tmp/vaultwarden
+ADD https://github.com/dani-garcia/vaultwarden/archive/main.tar.gz /tmp/vaultwarden-main.tar.gz
+RUN tar xvfz /tmp/vaultwarden-main.tar.gz -C /tmp
 
 # Creates a dummy project used to grab dependencies
 RUN USER=root cargo new --bin /vaultwarden
 WORKDIR /vaultwarden
 
 # Copy over manifests and build files
-RUN cp -r /tmp/vaultwarden/Cargo.toml ./ \
-    && cp -r /tmp/vaultwarden/Cargo.lock ./ \
-    && cp -r /tmp/vaultwarden/rust-toolchain ./rust-toolchain \
-    && cp -r /tmp/vaultwarden/build.rs ./build.rs
+RUN cp -r /tmp/vaultwarden-main/Cargo.toml ./ \
+    && cp -r /tmp/vaultwarden-main/Cargo.lock ./ \
+    && cp -r /tmp/vaultwarden-main/rust-toolchain ./rust-toolchain \
+    && cp -r /tmp/vaultwarden-main/build.rs ./build.rs
 
 RUN rustup target add x86_64-unknown-linux-musl
 
@@ -43,7 +40,7 @@ RUN cargo build --features ${DB} --release --target=x86_64-unknown-linux-musl \
     && find . -not -path "./target*" -delete
 
 # Copy over the complete vaultwarden source
-RUN cp -r /tmp/vaultwarden/. ./
+RUN cp -r /tmp/vaultwarden-main/. ./
 
 # Make sure that we actually build vaultwarden
 RUN touch src/main.rs
@@ -83,7 +80,7 @@ RUN mkdir -p /data \
 
 WORKDIR /vaultwarden
 
-COPY --from=builder /tmp/vaultwarden/Rocket.toml .
+COPY --from=builder /vaultwarden/Rocket.toml .
 COPY --from=builder /vaultwarden/target/x86_64-unknown-linux-musl/release/vaultwarden .
 COPY ./start.sh .
 
