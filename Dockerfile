@@ -43,7 +43,7 @@ RUN cargo build --features ${DB} --release --target=x86_64-unknown-linux-musl \
     && find . -not -path "./target*" -delete
 
 # Copy over the complete vaultwarden source
-RUN cp -r /tmp/vaultwarden-main/. ./
+RUN cp -r /tmp/vaultwarden-${VAULTWARDEN_VERSION}/. ./
 
 # Make sure that we actually build vaultwarden
 RUN touch src/main.rs
