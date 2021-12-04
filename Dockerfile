@@ -1,8 +1,11 @@
+ARG VAULTWARDEN_VERSION=1.23.0
+
 ####################################################################################################
 ## Builder
 ####################################################################################################
 FROM clux/muslrust:nightly-2021-10-23 AS builder
 
+ARG VAULTWARDEN_VERSION
 # Build only for Postgresql backend
 ARG DB=postgresql
 
@@ -20,18 +23,18 @@ RUN mkdir -pv "${CARGO_HOME}" \
     && rustup set profile minimal
 
 # Get Vaultwarden project files
-ADD https://github.com/dani-garcia/vaultwarden/archive/main.tar.gz /tmp/vaultwarden-main.tar.gz
-RUN tar xvfz /tmp/vaultwarden-main.tar.gz -C /tmp
+ADD https://github.com/dani-garcia/vaultwarden/archive/${VAULTWARDEN_VERSION}.tar.gz /tmp/vaultwarden-${VAULTWARDEN_VERSION}.tar.gz
+RUN tar xvfz /tmp/vaultwarden-${VAULTWARDEN_VERSION}.tar.gz -C /tmp
 
 # Creates a dummy project used to grab dependencies
 RUN USER=root cargo new --bin /vaultwarden
 WORKDIR /vaultwarden
 
 # Copy over manifests and build files
-RUN cp -r /tmp/vaultwarden-main/Cargo.toml ./ \
-    && cp -r /tmp/vaultwarden-main/Cargo.lock ./ \
-    && cp -r /tmp/vaultwarden-main/rust-toolchain ./rust-toolchain \
-    && cp -r /tmp/vaultwarden-main/build.rs ./build.rs
+RUN cp -r /tmp/vaultwarden-${VAULTWARDEN_VERSION}/Cargo.toml ./ \
+    && cp -r /tmp/vaultwarden-${VAULTWARDEN_VERSION}/Cargo.lock ./ \
+    && cp -r /tmp/vaultwarden-${VAULTWARDEN_VERSION}/rust-toolchain ./rust-toolchain \
+    && cp -r /tmp/vaultwarden-${VAULTWARDEN_VERSION}/build.rs ./build.rs
 
 RUN rustup target add x86_64-unknown-linux-musl
 
@@ -52,6 +55,8 @@ RUN cargo build --features ${DB} --release --target=x86_64-unknown-linux-musl
 ## Final image
 ####################################################################################################
 FROM alpine:3.15
+
+ARG VAULTWARDEN_VERSION
 
 ENV ROCKET_ENV="production" \
     ROCKET_PORT=80 \
@@ -115,3 +120,12 @@ HEALTHCHECK \
     --interval=1m \ 
     --timeout=5s \ 
     CMD wget --spider --q http://localhost:80/alive || exit 1
+
+# Image metadata
+LABEL org.opencontainers.image.version=${VAULTWARDEN_VERSION}
+LABEL org.opencontainers.image.title=Vaultwarden
+LABEL org.opencontainers.image.description="Bitwarden offers the easiest and safest way for teams and individuals to store and share sensitive data from any device. Your private information is protected with end-to-end encryption before it ever leaves your device."
+LABEL org.opencontainers.image.url=https://vault.silkky.cloud
+LABEL org.opencontainers.image.vendor="Silkky.Cloud"
+LABEL org.opencontainers.image.licenses=Unlicense
+LABEL org.opencontainers.image.source="https://github.com/silkkycloud/docker-bitwarden"
