@@ -95,7 +95,7 @@ services:
       labels:
         - "traefik.enable=true"
         # Router
-        - "traefik.http.routers.bitwarden-frontend.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub/negotiate`)"
+        - "traefik.http.routers.bitwarden-frontend.rule=Host(`${HOSTNAME}`)"
         - "traefik.http.routers.bitwarden-frontend.entrypoints=websecure"
         - "traefik.http.routers.bitwarden-frontend.tls=true"
         - "traefik.http.routers.bitwarden-frontend.middlewares=bitwarden-frontend-headers"
