@@ -32,7 +32,7 @@ services:
         - "traefik.http.routers.bitwarden.tls=true"
         - "traefik.http.routers.bitwarden.service=bitwarden-service"
         # Notifications socket router
-        - "traefik.http.routers.bitwarden-socket.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub`)"
+        - "traefik.http.routers.bitwarden-socket.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub/`)"
         - "traefik.http.routers.bitwarden-socket.entrypoints=websecure"
         - "traefik.http.routers.bitwarden-socket.tls=true"
         - "traefik.http.routers.bitwarden-socket.service=bitwarden-socket-service"
