@@ -35,14 +35,11 @@ services:
         - "traefik.http.routers.bitwarden-socket.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub`)"
         - "traefik.http.routers.bitwarden-socket.entrypoints=websecure"
         - "traefik.http.routers.bitwarden-socket.tls=true"
-        - "traefik.http.routers.bitwarden-socket.middlewares=bitwarden-socket-stripPrefix"
         - "traefik.http.routers.bitwarden-socket.service=bitwarden-socket-service"
         # Service
         - "traefik.http.services.bitwarden-service.loadbalancer.server.port=80"
         # Notifications socket service
         - "traefik.http.services.bitwarden-socket-service.loadbalancer.server.port=3012"
-        # Socket stripPrefix
-        - "traefik.http.middlewares.bitwarden-socket-stripPrefix.stripPrefix.prefixes=/notifications/hub"
     volumes:
       - data:/data
       - attachments:/vw-attachments
