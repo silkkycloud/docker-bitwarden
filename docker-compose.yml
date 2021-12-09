@@ -27,7 +27,7 @@ services:
       labels:
         - "traefik.enable=true"
         # Router
-        - "traefik.http.routers.bitwarden.rule=Host(`${HOSTNAME}`) && PathPrefix(`/api`, `/identity`, `/icons`, `/attachments`, `/bwrs_static`) && Path(`/notifications/hub/negotiate`)"
+        - "traefik.http.routers.bitwarden.rule=Host(`${HOSTNAME}`) && PathPrefix(`/api`, `/identity`, `/icons`, `/attachments`, `/bwrs_static`)"
         - "traefik.http.routers.bitwarden.entrypoints=websecure"
         - "traefik.http.routers.bitwarden.tls=true"
         - "traefik.http.routers.bitwarden.service=bitwarden-service"
