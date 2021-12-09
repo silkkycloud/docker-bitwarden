@@ -33,9 +33,9 @@ services:
         - "traefik.http.routers.bitwarden.service=bitwarden-service"
         # Notifications socket negotiate
         - "traefik.http.routers.bitwarden-socket-negotiate.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub/negotiate`)"
-        - "traefik.http.routers.bitwarden-socket-negotiate..entrypoints=websecure"
-        - "traefik.http.routers.bitwarden-socket-negotiate..tls=true"
-        - "traefik.http.routers.bitwarden-socket-negotiate..service=bitwarden-service"
+        - "traefik.http.routers.bitwarden-socket-negotiate.entrypoints=websecure"
+        - "traefik.http.routers.bitwarden-socket-negotiate.tls=true"
+        - "traefik.http.routers.bitwarden-socket-negotiate.service=bitwarden-service"
         # Notifications socket router
         - "traefik.http.routers.bitwarden-socket.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub`)"
         - "traefik.http.routers.bitwarden-socket.entrypoints=websecure"
