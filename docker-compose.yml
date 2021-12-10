@@ -7,7 +7,7 @@ services:
     hostname: vaultwarden
     networks:
       - public
-      - backend
+      - cockroachdb_net
     deploy:
       mode: replicated
       replicas: 1
@@ -52,7 +52,7 @@ services:
       - icons_cache:/vw-icon-cache
     environment:
       # Database
-      - DATABASE_URL=postgresql://bitwarden:${POSTGRESQL_PASSWORD}@postgresql:5432/bitwarden
+      - DATABASE_URL=postgresql://bitwarden:${POSTGRESQL_PASSWORD}@cockroach-lb:26257/bitwarden
       - ENABLE_DB_WAL=false
       # General
       - DOMAIN=https://${HOSTNAME}
@@ -110,45 +110,13 @@ services:
         # Headers
         - "traefik.http.middlewares.bitwarden-frontend-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://haveibeenpwned.com https://www.gravatar.com; child-src 'self' https://*.duosecurity.com https://*.duofederal.com; frame-src 'self' https://*.duosecurity.com https://*.duofederal.com; connect-src 'self' https://api.pwnedpasswords.com https://twofactorauth.org https://2fa.directory; object-src 'self' blob:;"
 
-  postgresql:
-    image: postgres:14-alpine
-    hostname: postgresql
-    networks:
-      - backend
-    deploy:
-      mode: replicated
-      replicas: 1
-      placement:
-        constraints:
-          - "node.hostname == main.web03.hel.hcloud.silkky.cloud"
-      resources:
-        limits:
-          cpus: '1'
-          memory: 4G
-        reservations:
-          cpus: '0.2'
-          memory: 512M
-    volumes:
-      - database:/var/lib/postgresql/data
-      - /etc/localtime:/etc/localtime:ro
-    environment:
-      - POSTGRES_DB=bitwarden
-      - POSTGRES_USER=bitwarden
-      - POSTGRES_PASSWORD=${POSTGRESQL_PASSWORD}
-
 networks:
   public:
     external: true
-  
-  backend:
-    driver: overlay
-    internal: true
-    driver_opts:
-      encrypted: "true"
-      com.docker.network.driver.mtu: 1450
+  cockroachdb_net:
+    external: true
 
 volumes:
-  database:
   data:
   attachments:
   sends:

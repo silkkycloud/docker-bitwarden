@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "Giving Portgresql time to start"
+echo "Staring Vaultwarden..."
 sleep 2s
 
 exec /vaultwarden/vaultwarden "${@}"
