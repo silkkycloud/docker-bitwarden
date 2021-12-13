@@ -77,7 +77,7 @@ services:
       - HIBP_API_KEY=${HIBP_KEY}
 
   frontend:
-    image: ghcr.io/silkkycloud/vaultwarden-frontend:2.24.1
+    image: ghcr.io/silkkycloud/vaultwarden-frontend:2.25.0
     hostname: vaultwarden-frontend
     networks:
       - public
