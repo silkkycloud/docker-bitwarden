@@ -57,7 +57,7 @@ services:
       # General
       - DOMAIN=https://${HOSTNAME}
       - SIGNUPS_ALLOWED=true
-      - IP_HEADER=X-Forwarded-For
+      - IP_HEADER=Cf-Connecting-Ip
       - LOG_FILE=/data/bitwarden.log
       # Email
       - SMTP_HOST=${MAIL_HOST}
