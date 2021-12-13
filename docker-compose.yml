@@ -78,7 +78,7 @@ services:
 
   frontend:
     image: ghcr.io/silkkycloud/vaultwarden-frontend:2.24.1
-    hostname: vaultwarden-web
+    hostname: vaultwarden-frontend
     networks:
       - public
     deploy:
