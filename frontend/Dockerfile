@@ -21,6 +21,6 @@ FROM vaultwarden/web-vault@sha256:0e8daf80abb73ebca69d1971847450d24da45a74a525fd
 ####################################################################################################
 ## Final image
 ####################################################################################################
-FROM caddy:2-alpine
+FROM ghcr.io/silkkycloud/caddy:2.4.6
 
-COPY --from=vault /web-vault /usr/share/caddy
+COPY --from=vault --chown=caddy:caddy /web-vault/. /srv

@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-docker:
+  api:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,7 +36,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile
+          file: ./api/Dockerfile
           push: true
           tags: ghcr.io/silkkycloud/vaultwarden:latest,ghcr.io/silkkycloud/vaultwarden:1.23.0
           cache-from: type=local,src=/tmp/.buildx-cache
@@ -46,7 +46,7 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
-  build-web-vault:
+  frontend:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -73,9 +73,9 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
-          file: ./Dockerfile.web
+          file: ./frontend/Dockerfile
           push: true
-          tags: ghcr.io/silkkycloud/vaultwarden-web:latest,ghcr.io/silkkycloud/vaultwarden-web:2.24.1
+          tags: ghcr.io/silkkycloud/vaultwarden-frontend:latest,ghcr.io/silkkycloud/vaultwarden-frontend:2.24.1
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move Cache
