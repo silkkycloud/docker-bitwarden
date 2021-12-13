@@ -76,7 +76,7 @@ services:
       # HaveIBeenPwned API Key
       - HIBP_API_KEY=${HIBP_KEY}
 
-  web:
+  frontend:
     image: ghcr.io/silkkycloud/vaultwarden-frontend:2.24.1
     hostname: vaultwarden-web
     networks:
