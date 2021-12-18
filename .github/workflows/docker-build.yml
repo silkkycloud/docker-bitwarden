@@ -38,7 +38,7 @@ jobs:
           context: .
           file: ./api/Dockerfile
           push: true
-          tags: ghcr.io/silkkycloud/vaultwarden:latest,ghcr.io/silkkycloud/vaultwarden:1.23.0
+          tags: ghcr.io/silkkycloud/vaultwarden:latest,ghcr.io/silkkycloud/vaultwarden:1.23.1
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
       - name: Move Cache
