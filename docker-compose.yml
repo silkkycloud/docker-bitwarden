@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   api:
-    image: ghcr.io/silkkycloud/vaultwarden:1.23.0
+    image: ghcr.io/silkkycloud/vaultwarden:1.23.1
     hostname: vaultwarden
     networks:
       - public
