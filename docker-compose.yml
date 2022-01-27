@@ -30,17 +30,22 @@ services:
         - "traefik.http.routers.bitwarden.rule=Host(`${HOSTNAME}`) && PathPrefix(`/api`, `/identity`, `/icons`, `/attachments`, `/bwrs_static`)"
         - "traefik.http.routers.bitwarden.entrypoints=websecure"
         - "traefik.http.routers.bitwarden.tls=true"
+        - "traefik.http.routers.bitwarden.middlewares=bitwarden-headers"
         - "traefik.http.routers.bitwarden.service=bitwarden-service"
         # Notifications socket negotiate
         - "traefik.http.routers.bitwarden-socket-negotiate.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub/negotiate`)"
         - "traefik.http.routers.bitwarden-socket-negotiate.entrypoints=websecure"
         - "traefik.http.routers.bitwarden-socket-negotiate.tls=true"
+        - "traefik.http.routers.bitwarden-socket-negotiate.middlewares=bitwarden-headers"
         - "traefik.http.routers.bitwarden-socket-negotiate.service=bitwarden-service"
         # Notifications socket router
         - "traefik.http.routers.bitwarden-socket.rule=Host(`${HOSTNAME}`) && Path(`/notifications/hub`)"
         - "traefik.http.routers.bitwarden-socket.entrypoints=websecure"
         - "traefik.http.routers.bitwarden-socket.tls=true"
+        - "traefik.http.routers.bitwarden-socket.middlewares=bitwarden-headers"
         - "traefik.http.routers.bitwarden-socket.service=bitwarden-socket-service"
+        # Middleware
+        - "traefik.http.middlewares.bitwarden-headers.headers.framedeny=true"
         # Service
         - "traefik.http.services.bitwarden-service.loadbalancer.server.port=80"
         # Notifications socket service
@@ -109,6 +114,7 @@ services:
         - "traefik.http.services.bitwarden-frontend-service.loadbalancer.sticky.cookie.samesite=strict"
         # Headers
         - "traefik.http.middlewares.bitwarden-frontend-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://haveibeenpwned.com https://www.gravatar.com; child-src 'self' https://*.duosecurity.com https://*.duofederal.com; frame-src 'self' https://*.duosecurity.com https://*.duofederal.com; connect-src 'self' https://api.pwnedpasswords.com https://twofactorauth.org https://2fa.directory; object-src 'self' blob:;"
+        - "traefik.http.middlewares.bitwarden-frontend-headers.headers.framedeny=true"
 
   postgresql:
     image: postgres:14-alpine
