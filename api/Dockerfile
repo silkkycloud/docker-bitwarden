@@ -1,9 +1,9 @@
-ARG VAULTWARDEN_VERSION=1.23.1
+ARG VAULTWARDEN_VERSION=1.24.0
 
 ####################################################################################################
 ## Builder
 ####################################################################################################
-FROM clux/muslrust:nightly-2021-10-23 AS builder
+FROM blackdex/rust-musl:x86_64-musl-nightly-2022-01-23 AS builder
 
 ARG VAULTWARDEN_VERSION
 # Build only for Postgresql backend

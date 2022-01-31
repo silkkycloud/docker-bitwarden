@@ -3,7 +3,7 @@ version: '3.8'
 services:
 
   api:
-    image: ghcr.io/silkkycloud/vaultwarden:1.23.1
+    image: ghcr.io/silkkycloud/vaultwarden:1.24.0
     hostname: vaultwarden
     networks:
       - public
@@ -82,7 +82,7 @@ services:
       - HIBP_API_KEY=${HIBP_KEY}
 
   frontend:
-    image: ghcr.io/silkkycloud/vaultwarden-frontend:2.25.0
+    image: ghcr.io/silkkycloud/vaultwarden-frontend:2.25.1b
     hostname: vaultwarden-frontend
     networks:
       - public

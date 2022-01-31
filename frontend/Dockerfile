@@ -16,7 +16,7 @@
 #     $ docker image inspect --format "{{.RepoTags}}" vaultwarden/web-vault@sha256:0df389deac9e83c739a1f4ff595f12f493b6c27cb4a22bb8fcaba9dc49b9b527
 #     [vaultwarden/web-vault:v2.25.0]
 #
-FROM vaultwarden/web-vault@sha256:0df389deac9e83c739a1f4ff595f12f493b6c27cb4a22bb8fcaba9dc49b9b527 AS vault
+FROM vaultwarden/web-vault@sha256:9b82318d553d72f091e8755f5aff80eed495f90bbe5b0703522953480f5c2fba AS vault
 
 ####################################################################################################
 ## Final image
