@@ -116,9 +116,9 @@ EXPOSE 3012
 STOPSIGNAL SIGTERM
 
 HEALTHCHECK \
-    --start-period=15s \ 
-    --interval=1m \ 
-    --timeout=5s \ 
+    --start-period=15s \
+    --interval=1m \
+    --timeout=5s \
     CMD wget --spider --q http://localhost:80/alive || exit 1
 
 # Image metadata
