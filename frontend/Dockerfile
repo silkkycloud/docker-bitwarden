@@ -24,3 +24,5 @@ FROM vaultwarden/web-vault@sha256:4412f0790fc1b8c7c86fc07f7761cd37c554802738629e
 FROM ghcr.io/silkkycloud/caddy:2.4.6
 
 COPY --from=vault --chown=caddy:caddy /web-vault/. /srv
+
+USER caddy
