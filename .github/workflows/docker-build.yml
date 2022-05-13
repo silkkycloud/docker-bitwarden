@@ -96,7 +96,7 @@ jobs:
           context: .
           file: ./frontend/Dockerfile
           push: true
-          tags: ghcr.io/silkkycloud/vaultwarden-frontend:latest,ghcr.io/silkkycloud/vaultwarden-frontend:2.28.0
+          tags: ghcr.io/silkkycloud/vaultwarden-frontend:latest,ghcr.io/silkkycloud/vaultwarden-frontend:2.28.1
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new
 
