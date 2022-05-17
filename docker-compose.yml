@@ -61,7 +61,7 @@ services:
       - ENABLE_DB_WAL=false
       # General
       - DOMAIN=https://${HOSTNAME}
-      - SIGNUPS_ALLOWED=true
+      - SIGNUPS_ALLOWED=false
       - IP_HEADER=X-Forwarded-For
       - LOG_FILE=/data/bitwarden.log
       # Email
